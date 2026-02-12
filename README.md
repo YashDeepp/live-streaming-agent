@@ -10,6 +10,8 @@ The system captures video (MP4 or camera), performs object detection using YOLO 
 
 Make sure Docker and Docker Compose are installed.
 
+Replace the `VIDEO_SOURCE` value with actual source path/0/rtsp in capture/camera_stream.py
+
 From the root directory of the project, simply run:
 
 ```bash
