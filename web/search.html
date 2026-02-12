@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Object Search</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        input {
+            padding: 8px;
+            width: 300px;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        .result {
+            background: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 6px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        img {
+            max-width: 400px;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🔎 Object Search</h2>
+
+<input id="query" placeholder="Enter objects e.g. person,car" />
+<button onclick="search()">Search</button>
+
+<div id="results"></div>
+
+<script>
+async function search() {
+    const query = document.getElementById("query").value;
+    const response = await fetch(`http://localhost:8000/search?objects=${query}`);
+    console.log("Response status:", response.status);
+    const data = await response.json();
+
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    if (data.results.length === 0) {
+        resultsDiv.innerHTML = "<p>No results found</p>";
+        return;
+    }
+
+    data.results.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "result";
+
+        const time = new Date(item.timestamp * 1000).toLocaleString();
+
+        div.innerHTML = `
+            <strong>Detected Objects:</strong> ${item.objects.join(", ")} <br/>
+            <strong>Timestamp:</strong> ${time}
+        `;
+
+        resultsDiv.appendChild(div);
+    });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  mediamtx:
+    image: bluenviron/mediamtx
+    ports:
+      - "8554:8554"
+      - "8888:8888"
+    volumes:
+      - ../config/mediamtx.yml:/mediamtx.yml
+
+  capture:
+    build: ..
+    depends_on:
+      - mediamtx
+      - redis
+
+  backend:
+    build: ..
+    command: uvicorn backend.app:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+
+  
