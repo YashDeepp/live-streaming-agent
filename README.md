@@ -15,6 +15,8 @@ Replace the `VIDEO_SOURCE` value with actual source path/0/rtsp in capture/camer
 From the root directory of the project, simply run:
 
 ```bash
+cd deploy
+
 docker compose up --build
 ```
 
