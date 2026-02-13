@@ -2,7 +2,6 @@ FROM python:3.10
 
 WORKDIR /app
 
-# Install OpenCV system dependencies
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     libgl1 \
